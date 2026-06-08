@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Weather</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="script.js" defer></script>
+<style>
+    body { background: #0b0f2e; }
+    .bg-scene {
+      background: linear-gradient(to bottom, #0b1a4f 0%, #1a2a6c 40%, #0b0f2e 100%);
+    }
+    /* Load Icon */
+    .spinner {
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-scene min-h-screen text-white font-sans">
+
+  <!-- NAVBAR -->
+  <nav class="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl">🌤️</span>
+      <span class="font-semibold text-lg">My Weather</span>
+    </div>
+    <!-- Units toggle button -->
+    <button id="units-btn" class="flex items-center gap-1 border border-gray-500 text-sm px-3 py-1.5 rounded-lg text-gray-300 hover:bg-white/10">
+      ⚙️ °C / °F ▾
+    </button>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="text-center mt-4 mb-6 px-4">
+    <h1 class="text-3xl md:text-4xl font-bold">How's the sky looking today?</h1>
+  </div>
+
+  <!--CITY SEARCH -->
+  <div class="flex justify-center px-4 mb-8">
+    <div class="flex w-full max-w-xl bg-[#1a2050] border border-blue-800 rounded-xl overflow-hidden">
+      <span class="px-4 flex items-center text-gray-400">🔍</span>
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Search for a city..."
+        class="flex-1 bg-transparent py-3 text-white placeholder-gray-400 outline-none text-sm"
+      />
+      <button id="search-btn" class="bg-blue-600 hover:bg-blue-700 px-5 py-3 text-sm font-semibold">
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  <div id="error-msg" class="hidden text-center text-red-400 text-sm mb-4">
+    ⚠️ City not found. Please try another name.
+  </div>
+
+  <!-- BODY -->
+  <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+    <!-- LEFT COLUMN -->
+    <div class="lg:col-span-2 flex flex-col gap-4">
+
+      <!-- CURRENT WEATHER CARD -->
+      <div class="bg-[#1e2a72] rounded-2xl p-6 flex items-center justify-between relative overflow-hidden">
+        <div>
+          <h2 id="city-name" class="text-2xl font-bold">lagos, Nigeia</h2>
+          <p id="current-date" class="text-gray-300 text-sm mt-1">Monday, Jun 8, 2026</p>
+          <p id="local-time" class="text-gray-400 text-sm mt-1">🕒 Local time: 2:45 PM</p>
+          <p id="temperature" class="text-6xl font-bold mt-4">26°</p>
+          <p id="condition-text" class="text-xl mt-1">Sunny</p>
+          <span id="condition-badge" class="inline-flex items-center gap-1 mt-2 bg-[#2a3590] text-sm px-3 py-1 rounded-full">
+            🌤️ Clear Sky
+          </span>
+          <p class="text-gray-300 text-sm mt-3">
+            H: <span id="temp-high" class="mr-3">21°</span> L: <span id="temp-low">14°</span>
+          </p>
+        </div>
+        <div id="weather-icon" class="text-8xl md:text-9xl">☀️</div>
+      </div>
+
+      <!-- STATS CARDS -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-[#131829] rounded-2xl p-4 flex flex-col items-start gap-2">
+          <div class="flex items-center gap-2 text-gray-400 text-sm">
+            <span class="bg-purple-700 p-1.5 rounded-lg text-base">🌡️</span>
+            Feels Like
+          </div>
+          <p id="feels-like" class="text-2xl font-bold">18°</p>
+        </div>
+        <div class="bg-[#131829] rounded-2xl p-4 flex flex-col items-start gap-2">
+          <div class="flex items-center gap-2 text-gray-400 text-sm">
+            <span class="bg-blue-700 p-1.5 rounded-lg text-base">💧</span>
+            Humidity
+          </div>
+          <p id="humidity" class="text-2xl font-bold">46%</p>
+        </div>
+        <div class="bg-[#131829] rounded-2xl p-4 flex flex-col items-start gap-2">
+          <div class="flex items-center gap-2 text-gray-400 text-sm">
+            <span class="bg-teal-700 p-1.5 rounded-lg text-base">💨</span>
+            Wind
+          </div>
+          <p id="wind-speed" class="text-2xl font-bold">14 km/h</p>
+        </div>
+        <div class="bg-[#131829] rounded-2xl p-4 flex flex-col items-start gap-2">
+          <div class="flex items-center gap-2 text-gray-400 text-sm">
+            <span class="bg-indigo-700 p-1.5 rounded-lg text-base">☂️</span>
+            Precipitation
+          </div>
+          <p id="precipitation" class="text-2xl font-bold">0 mm</p>
+        </div>
+      </div>
+
+      <!-- DAILY FORECAST -->
+      <div>
+        <h3 class="font-semibold text-base mb-3">Daily forecast</h3>
+        <div id="daily-forecast" class="grid grid-cols-7 gap-2">
+            <!-- To be completed using JavaScript -->
+        </div>
+      </div>
+
+    </div>
+  
+    <!-- RIGHT COLUMN: Hourly Forecast -->
+    <div class="bg-[#131829] rounded-2xl p-5 flex flex-col gap-3">
+      <div class="flex items-center justify-between mb-1">
+        <h3 class="font-semibold text-base">Hourly forecast</h3>
+      </div>
+      <div id="hourly-forecast" class="flex flex-col gap-1">
+        <!-- To be completed using JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="text-center text-gray-500 text-xs mt-10 pb-6">
+    © 2026 My Weather. All rights reserved.
+  </footer>
+</body>
+</html>
